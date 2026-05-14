@@ -1,0 +1,46 @@
+# Binaries
+bin/
+*.exe
+*.o
+*.a
+*.so
+*.dll
+
+# Data and Outputs
+data/
+*.csv
+*.bin
+*.png
+!shibata_dnn_output.png
+output_*.csv
+
+# Node.js
+node_modules/
+.env
+
+# IDE and AI tools
+.vscode/
+.cline/
+.continue/
+.lmstudio/
+.copilot/
+.cache/
+.gk/
+.s/
+.h/
+.templateengine/
+
+# OS files
+desktop.ini
+NTUSER.DAT*
+ntuser.dat*
+ntuser.ini
+
+# Python
+__pycache__/
+*.pyc
+
+# Others
+*.7z
+*.lst
+*.ini
