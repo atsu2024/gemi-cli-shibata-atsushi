@@ -8,26 +8,26 @@ import (
 	"time"
 )
 
-// Deep Learning (深層学習) & DNN (ディープニューラルネットワーク) Configuration
+// DNN Configuration
 const (
-	InputSize    = 5
-	HiddenSize   = 10
+	InputSize    = 4
+	HiddenSize   = 8
 	OutputSize   = 1
-	LearningRate = 0.001
-	Epochs       = 9000
+	LearningRate = 0.05
+	Epochs       = 10000
 )
 
-// Sigmoid activation function (シグモイド関数)
+// Activation function: Sigmoid
 func sigmoid(x float64) float64 {
 	return 1.0 / (1.0 + math.Exp(-x))
 }
 
-// Derivative of sigmoid for backpropagation
+// Derivative of Sigmoid
 func sigmoidDerivative(x float64) float64 {
 	return x * (1.0 - x)
 }
 
-// Neuron represents a single neuron in the DNN
+// Neuron structure
 type Neuron struct {
 	weights []float64
 	bias    float64
@@ -35,17 +35,17 @@ type Neuron struct {
 	delta   float64
 }
 
-// Layer represents a collection of neurons processing in parallel via goroutines
+// Layer structure
 type Layer struct {
 	neurons []*Neuron
 }
 
-// DNN represents the Deep Neural Network structure
+// DNN structure
 type DNN struct {
 	layers []*Layer
 }
 
-// NewDNN initializes a new DNN with random weights and high precision
+// NewDNN initializes the network with random weights
 func NewDNN() *DNN {
 	rand.Seed(time.Now().UnixNano())
 	
@@ -72,7 +72,7 @@ func NewDNN() *DNN {
 	return &DNN{layers: []*Layer{hidden, output}}
 }
 
-// Forward pass using Goroutines (並列処理) for maximum performance
+// Forward pass with Goroutines
 func (net *DNN) Forward(input []float64) []float64 {
 	currentInput := input
 	for _, layer := range net.layers {
@@ -97,31 +97,28 @@ func (net *DNN) Forward(input []float64) []float64 {
 	return currentInput
 }
 
-// Train performs backpropagation and weight updates in parallel using goroutines
+// Backpropagation with Goroutines
 func (net *DNN) Train(input, target []float64) {
 	// 1. Forward Pass
 	net.Forward(input)
 
-	// 2. Calculate Output Layer Deltas
-	outLayer := net.layers[len(net.layers)-1]
+	// 2. Output Layer Deltas
+	outLayer := net.layers[1]
 	for i, neuron := range outLayer.neurons {
 		neuron.delta = (target[i] - neuron.output) * sigmoidDerivative(neuron.output)
 	}
 
-	// 3. Calculate Hidden Layer Deltas
-	for l := len(net.layers) - 2; l >= 0; l-- {
-		layer := net.layers[l]
-		nextLayer := net.layers[l+1]
-		for i, neuron := range layer.neurons {
-			var errorSum float64
-			for _, nextNeuron := range nextLayer.neurons {
-				errorSum += nextNeuron.delta * nextNeuron.weights[i]
-			}
-			neuron.delta = errorSum * sigmoidDerivative(neuron.output)
+	// 3. Hidden Layer Deltas
+	hiddenLayer := net.layers[0]
+	for i, hNeuron := range hiddenLayer.neurons {
+		var errorSum float64
+		for _, oNeuron := range outLayer.neurons {
+			errorSum += oNeuron.delta * oNeuron.weights[i]
 		}
+		hNeuron.delta = errorSum * sigmoidDerivative(hNeuron.output)
 	}
 
-	// 4. Update Weights & Biases in Parallel using Goroutines
+	// 4. Update Weights & Biases in Parallel
 	for lIdx, layer := range net.layers {
 		var prevOutput []float64
 		if lIdx == 0 {
@@ -150,52 +147,48 @@ func (net *DNN) Train(input, target []float64) {
 
 func main() {
 	fmt.Println("================================================================")
-	fmt.Println("  Deep Learning (深層学習) - DNN (ディープニューラルネットワーク)")
-	fmt.Println("  High-Performance Implementation using Go Goroutines")
+	fmt.Println("  Deep Learning (深層学習) - Parallel DNN with Goroutines")
+	fmt.Println("  Directory: C:\\Users\\S111478")
 	fmt.Println("================================================================")
 
-	// Generate some sample data for a simple regression/classification task
-	// Input: Random features, Target: Sum of features (normalized)
-	inputs := make([][]float64, 10)
-	targets := make([][]float64, 10)
-	for i := 0; i < 10; i++ {
-		inputs[i] = make([]float64, InputSize)
-		sum := 0.0
-		for j := 0; j < InputSize; j++ {
-			inputs[i][j] = rand.Float64()
-			sum += inputs[i][j]
-		}
-		targets[i] = []float64{sigmoid(sum / float64(InputSize))}
+	// Training data (XOR-like or simple logic)
+	// Input: [A, B, C, D] -> Target: (A AND B) OR (C AND D)
+	inputs := [][]float64{
+		{1, 1, 0, 0}, {1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 0, 0},
+		{0, 0, 1, 1}, {0, 0, 1, 0}, {0, 0, 0, 1}, {1, 1, 1, 1},
+	}
+	targets := [][]float64{
+		{1}, {0}, {0}, {0},
+		{1}, {0}, {0}, {1},
 	}
 
 	dnn := NewDNN()
 
-	fmt.Printf("Training started for %d epochs using Goroutines...\n", Epochs)
-	startTime := time.Now()
+	fmt.Printf("Training started (%d epochs)...\n", Epochs)
+	start := time.Now()
 
 	for epoch := 1; epoch <= Epochs; epoch++ {
 		for i := range inputs {
 			dnn.Train(inputs[i], targets[i])
 		}
 
-		if epoch%100 == 0 {
-			totalError := 0.0
+		if epoch%1000 == 0 {
+			err := 0.0
 			for i := range inputs {
 				out := dnn.Forward(inputs[i])
-				totalError += math.Abs(targets[i][0] - out[0])
+				err += math.Abs(targets[i][0] - out[0])
 			}
-			fmt.Printf("Epoch %d/%d - Average Error: %.10f\n", epoch, Epochs, totalError/10.0)
+			fmt.Printf("Epoch %d: Average Error = %.6f\n", epoch, err/float64(len(inputs)))
 		}
 	}
 
-	duration := time.Since(startTime)
-	fmt.Printf("\nTraining completed in %v\n", duration)
+	fmt.Printf("\nTraining completed in %v\n", time.Since(start))
 
-	fmt.Println("\nValidation of Results (Prediction vs Target):")
-	for i := 0; i < 3; i++ {
-		prediction := dnn.Forward(inputs[i])
-		fmt.Printf("Data [%d] - Target: %.6f | Predicted: %.6f\n", i, targets[i][0], prediction[0])
+	fmt.Println("\nVerification:")
+	for i, in := range inputs {
+		out := dnn.Forward(in)
+		fmt.Printf("Input: %v | Target: %.1f | Predicted: %.6f\n", in, targets[i][0], out[0])
 	}
 
-	fmt.Println("\nGO言語プログラム (dnn_goroutine.go) のビルドと実行が正常に完了しました。")
+	fmt.Println("\n[Success] DNN Goroutine implementation is ready.")
 }

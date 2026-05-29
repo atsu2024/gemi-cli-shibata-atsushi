@@ -4,7 +4,10 @@
 #include <math.h>
 #include <time.h>
 #include <string.h>
+#include <errno.h>
+#ifdef _OPENMP
 #include <omp.h>
+#endif
 
 /* 
  * Ultra-Enhanced Deep Neural Network (DNN) 
@@ -99,7 +102,9 @@ DeepMLP* create_mlp(int num_layers, int *layer_sizes) {
 void forward_prop(DeepMLP *mlp, long double *inputs) {
     for (int i = 0; i < mlp->layer_sizes[0]; i++) mlp->nodes[0][i] = inputs[i];
     for (int i = 1; i < mlp->num_layers; i++) {
+        #ifdef _OPENMP
         #pragma omp parallel for
+        #endif
         for (int j = 0; j < mlp->layer_sizes[i]; j++) {
             long double activation = mlp->biases[i][j];
             for (int k = 0; k < mlp->layer_sizes[i-1]; k++)
@@ -122,7 +127,9 @@ void back_prop_adam(DeepMLP *mlp, long double *targets, long double lr) {
         mlp->deltas[last][i] = error * sigmoid_derivative_ld(mlp->nodes[last][i]);
     }
     for (int i = last - 1; i > 0; i--) {
+        #ifdef _OPENMP
         #pragma omp parallel for
+        #endif
         for (int j = 0; j < mlp->layer_sizes[i]; j++) {
             long double error = 0.0L;
             for (int k = 0; k < mlp->layer_sizes[i+1]; k++)
@@ -132,7 +139,9 @@ void back_prop_adam(DeepMLP *mlp, long double *targets, long double lr) {
     }
     
     for (int i = 1; i < mlp->num_layers; i++) {
+        #ifdef _OPENMP
         #pragma omp parallel for
+        #endif
         for (int j = 0; j < mlp->layer_sizes[i]; j++) {
             long double g_b = mlp->deltas[i][j];
             mlp->m_biases[i][j] = mlp->beta1 * mlp->m_biases[i][j] + (1.0L - mlp->beta1) * g_b;
@@ -208,7 +217,16 @@ int main() {
         printf("> ");
         if (!fgets(buf, sizeof(buf), stdin) || strstr(buf, "exit")) break;
         long double in[2];
-        if (sscanf(buf, "%Lf %Lf", &in[0], &in[1]) == 2) {
+        char *cursor = buf;
+        char *endptr = NULL;
+        errno = 0;
+        in[0] = strtold(cursor, &endptr);
+        if (endptr != cursor && errno == 0) {
+            cursor = endptr;
+            errno = 0;
+            in[1] = strtold(cursor, &endptr);
+        }
+        if (endptr != cursor && errno == 0) {
             forward_prop(mlp, in);
             printf("Prediction: %.15Lf (Class: %d)\n", mlp->nodes[5][0], mlp->nodes[5][0] > 0.5L ? 1 : 0);
         }

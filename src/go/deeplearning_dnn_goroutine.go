@@ -4,18 +4,19 @@ import (
 	"fmt"
 	"math"
 	"math/rand"
+	"runtime"
 	"sync"
 	"time"
 )
 
 // Deep Learning (深層学習) Parameters
-// Source: C:\Users\S111478\OneDrive - 三機工業株式会社\ドキュメント\gemini llm構築.pdf
 const (
 	InputSize    = 10
 	HiddenSize   = 32
 	OutputSize   = 10
 	LearningRate = 0.1
 	Epochs       = 500
+	ParallelThreshold = 256 // Run sequentially if neurons < this
 )
 
 // Sigmoid activation function
@@ -39,6 +40,7 @@ type Neuron struct {
 // Layer represents a collection of neurons
 type Layer struct {
 	neurons []*Neuron
+	outputs []float64 // Pre-allocated output buffer
 }
 
 // DNN represents the Deep Neural Network structure
@@ -46,12 +48,15 @@ type DNN struct {
 	layers []*Layer
 }
 
-// NewDNN initializes a new DNN with random weights
+// NewDNN initializes a new DNN with random weights and pre-allocated buffers
 func NewDNN() *DNN {
 	rand.Seed(time.Now().UnixNano())
 	
 	// Create Hidden Layer
-	hidden := &Layer{neurons: make([]*Neuron, HiddenSize)}
+	hidden := &Layer{
+		neurons: make([]*Neuron, HiddenSize),
+		outputs: make([]float64, HiddenSize),
+	}
 	for i := 0; i < HiddenSize; i++ {
 		n := &Neuron{weights: make([]float64, InputSize)}
 		for j := 0; j < InputSize; j++ {
@@ -61,7 +66,10 @@ func NewDNN() *DNN {
 	}
 
 	// Create Output Layer
-	output := &Layer{neurons: make([]*Neuron, OutputSize)}
+	output := &Layer{
+		neurons: make([]*Neuron, OutputSize),
+		outputs: make([]float64, OutputSize),
+	}
 	for i := 0; i < OutputSize; i++ {
 		n := &Neuron{weights: make([]float64, HiddenSize)}
 		for j := 0; j < HiddenSize; j++ {
@@ -73,43 +81,71 @@ func NewDNN() *DNN {
 	return &DNN{layers: []*Layer{hidden, output}}
 }
 
-// Forward pass using Goroutines for parallel neuron calculation
+// Forward pass using Chunked Goroutines or Sequential execution
 func (net *DNN) Forward(input []float64) []float64 {
 	currentInput := input
-	for _, layer := range net.layers {
-		nextInput := make([]float64, len(layer.neurons))
-		var wg sync.WaitGroup
-		wg.Add(len(layer.neurons))
+	numCPU := runtime.NumCPU()
 
-		for i, neuron := range layer.neurons {
-			go func(idx int, n *Neuron, in []float64) {
-				defer wg.Done()
-				sum := n.bias
-				for k, w := range n.weights {
-					sum += w * in[k]
+	for _, layer := range net.layers {
+		numNeurons := len(layer.neurons)
+
+		if numNeurons < ParallelThreshold {
+			// Sequential execution for small layers
+			for i, neuron := range layer.neurons {
+				sum := neuron.bias
+				for k, w := range neuron.weights {
+					sum += w * currentInput[k]
 				}
-				n.output = sigmoid(sum)
-				nextInput[idx] = n.output
-			}(i, neuron, currentInput)
+				neuron.output = sigmoid(sum)
+				layer.outputs[i] = neuron.output
+			}
+		} else {
+			// Chunked Parallel execution for large layers
+			var wg sync.WaitGroup
+			chunkSize := (numNeurons + numCPU - 1) / numCPU
+			for c := 0; c < numCPU; c++ {
+				start := c * chunkSize
+				if start >= numNeurons {
+					break
+				}
+				end := start + chunkSize
+				if end > numNeurons {
+					end = numNeurons
+				}
+
+				wg.Add(1)
+				go func(s, e int, in []float64) {
+					defer wg.Done()
+					for i := s; i < e; i++ {
+						n := layer.neurons[i]
+						sum := n.bias
+						for k, w := range n.weights {
+							sum += w * in[k]
+						}
+						n.output = sigmoid(sum)
+						layer.outputs[i] = n.output
+					}
+				}(start, end, currentInput)
+			}
+			wg.Wait()
 		}
-		wg.Wait()
-		currentInput = nextInput
+		currentInput = layer.outputs
 	}
 	return currentInput
 }
 
-// Backpropagate error and update weights using Goroutines
+// Backpropagate error and update weights
 func (net *DNN) Train(input, target []float64) {
 	// 1. Forward Pass
 	net.Forward(input)
 
-	// 2. Calculate Output Layer Deltas
+	// 2. Calculate Output Layer Deltas (Sequential)
 	outLayer := net.layers[1]
 	for i, neuron := range outLayer.neurons {
 		neuron.delta = (target[i] - neuron.output) * sigmoidDerivative(neuron.output)
 	}
 
-	// 3. Calculate Hidden Layer Deltas
+	// 3. Calculate Hidden Layer Deltas (Sequential)
 	hiddenLayer := net.layers[0]
 	for i, hNeuron := range hiddenLayer.neurons {
 		var errorSum float64
@@ -119,30 +155,51 @@ func (net *DNN) Train(input, target []float64) {
 		hNeuron.delta = errorSum * sigmoidDerivative(hNeuron.output)
 	}
 
-	// 4. Update Weights & Biases in Parallel
+	// 4. Update Weights & Biases with Chunking/Sequential logic
+	numCPU := runtime.NumCPU()
 	for lIdx, layer := range net.layers {
 		var prevOutput []float64
 		if lIdx == 0 {
 			prevOutput = input
 		} else {
-			prevOutput = make([]float64, len(net.layers[lIdx-1].neurons))
-			for i, n := range net.layers[lIdx-1].neurons {
-				prevOutput[i] = n.output
-			}
+			prevOutput = net.layers[lIdx-1].outputs
 		}
 
-		var wg sync.WaitGroup
-		wg.Add(len(layer.neurons))
-		for _, neuron := range layer.neurons {
-			go func(n *Neuron, in []float64) {
-				defer wg.Done()
-				for i := range n.weights {
-					n.weights[i] += LearningRate * n.delta * in[i]
+		numNeurons := len(layer.neurons)
+		if numNeurons < ParallelThreshold {
+			for _, neuron := range layer.neurons {
+				for i := range neuron.weights {
+					neuron.weights[i] += LearningRate * neuron.delta * prevOutput[i]
 				}
-				n.bias += LearningRate * n.delta
-			}(neuron, prevOutput)
+				neuron.bias += LearningRate * neuron.delta
+			}
+		} else {
+			var wg sync.WaitGroup
+			chunkSize := (numNeurons + numCPU - 1) / numCPU
+			for c := 0; c < numCPU; c++ {
+				start := c * chunkSize
+				if start >= numNeurons {
+					break
+				}
+				end := start + chunkSize
+				if end > numNeurons {
+					end = numNeurons
+				}
+
+				wg.Add(1)
+				go func(s, e int, in []float64) {
+					defer wg.Done()
+					for i := s; i < e; i++ {
+						n := layer.neurons[i]
+						for k := range n.weights {
+							n.weights[k] += LearningRate * n.delta * in[k]
+						}
+						n.bias += LearningRate * n.delta
+					}
+				}(start, end, prevOutput)
+			}
+			wg.Wait()
 		}
-		wg.Wait()
 	}
 }
 

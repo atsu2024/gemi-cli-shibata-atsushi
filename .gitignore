@@ -29,18 +29,77 @@ node_modules/
 .s/
 .h/
 .templateengine/
+.aider/
+.claude/
+.gemini/
+.aider.chat.history.md
+.aider.input.history
+.claude.json
+.vscode-shared/
+
+# Windows Home Directory Folders & Configs
+AppData/
+"Application Data/"
+"Local Settings/"
+"My Documents/"
+"NetHood/"
+"PrintHood/"
+"Recent/"
+"SendTo/"
+"Templates/"
+"繧ｹ繧ｿ繝ｼ繝 繝｡繝九Η繝ｼ/"
+"Cookies/"
+Desktop/
+Documents/
+Downloads/
+Favorites/
+Links/
+Music/
+Pictures/
+Videos/
+Contacts/
+Searches/
+"Saved Games/"
+Box/
+OneDrive*/
+Microsoft/
+Local Sites/
+.gitconfig
+.dotnet/
+.keras/
+.matplotlib/
+.nuget/
+.platformio/
+.wp-cli/
+.local/
+.cisco/
+.lmstudio-home-pointer
+.node_repl_history
+OpenVPN/
 
 # OS files
 desktop.ini
 NTUSER.DAT*
 ntuser.dat*
 ntuser.ini
+Thumbs.db
 
-# Python
+# Python & Virtual Environments
 __pycache__/
 *.pyc
+venv/
+.venv/
+
+# Docker
+.docker/
 
 # Others
 *.7z
 *.lst
 *.ini
+business-agent/
+shibata_sandbox/
+Project/
+Project_deeplearing/
+sample/
+hello/

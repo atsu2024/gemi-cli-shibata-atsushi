@@ -11,9 +11,6 @@
 
 int main() {
     long double pi_calc = 0.0L;
-    long double k_factorial = 1.0L;
-    long double multiple_k_factorial = 1.0L;
-    long double power_of_640320 = 1.0L;
     
     printf("--- High-Precision Scientific Computation (long double) ---\n");
     printf("Calculating PI approximation using Leibniz series and other constants...\n\n");

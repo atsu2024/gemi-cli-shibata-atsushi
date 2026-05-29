@@ -1,7 +1,9 @@
+#define __USE_MINGW_ANSI_STDIO 1
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include <errno.h>
 
 #define INPUT_SIZE 1024
 #define HIDDEN_SIZE 128
@@ -114,7 +116,28 @@ int main() {
         return 1;
     }
     for (int i = 0; i < INPUT_SIZE; i++) {
-        if (fscanf(fp, "%Lf,", &input_data[i]) == EOF) break;
+        char token[128];
+        int len = 0;
+        int ch;
+
+        while ((ch = fgetc(fp)) != EOF && (ch == ',' || ch == '\n' || ch == '\r' || ch == '\t' || ch == ' ')) {
+        }
+        if (ch == EOF) break;
+
+        do {
+            if (len < (int)sizeof(token) - 1) token[len++] = (char)ch;
+            ch = fgetc(fp);
+        } while (ch != EOF && ch != ',' && ch != '\n' && ch != '\r' && ch != '\t' && ch != ' ');
+
+        token[len] = '\0';
+        errno = 0;
+        char *endptr = NULL;
+        input_data[i] = strtold(token, &endptr);
+        if (errno != 0 || endptr == token || *endptr != '\0') {
+            printf("Error: Invalid value in image_data.csv at index %d\n", i);
+            fclose(fp);
+            return 1;
+        }
     }
     fclose(fp);
 

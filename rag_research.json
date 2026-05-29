@@ -1,7 +1,8 @@
 {
   "rag_system_metadata": {
-    "version": "2.1.0",
+    "version": "2.2.0",
     "description": "High-Precision Scientific Computing and Deep Learning RAG knowledge base",
+    "language": "ja",
     "vector_dimensions": 10,
     "similarity_algorithm": "cosine_similarity_long_double",
     "last_updated": "2026-05-28",
@@ -21,7 +22,7 @@
   "knowledge_base": [
     {
       "id": 1,
-      "content": "DNN from scratch: CとGoで外部MLライブラリに頼らず、重み、バイアス、順伝播、逆伝播、活性化関数を明示実装する方針。関連: src/c/libdnn.c, src/c/deep_mlp_long_double.c, src/go/shibata_dnn_goroutine.go.",
+      "content": "DNN from scratch: CとGoで外部MLライブラリに頼らず、重み、バイアス、順伝播、逆伝播、活性化関数を実装する方針。関連: src/c/libdnn.c, src/c/deep_mlp_long_double.c, src/go/shibata_dnn_goroutine.go.",
       "vector": [0.95, 0.20, 0.05, 0.55, 0.15, 0.30, 0.35, 0.05, 0.20, 0.10],
       "tags": ["dnn", "c", "go", "from-scratch"]
     },
@@ -39,7 +40,7 @@
     },
     {
       "id": 4,
-      "content": "Break-even point analysis: 固定費、変動費、限界利益率、安全余裕率を計算し、DNNやPID的な調整と組み合わせて収益構造を分析する。関連: mathp/bep_shibata.c, mathp/bep_dnn_goroutine.go.",
+      "content": "Break-even point analysis: 固定費、変動費、限界利益率、安全余裕率を計算し、DNNとRAGを組み合わせて収支構造を分析する。関連: mathp/bep_shibata.c, mathp/bep_dnn_goroutine.go.",
       "vector": [0.45, 0.35, 1.00, 0.10, 0.30, 0.25, 0.35, 0.05, 0.80, 0.10],
       "tags": ["bep", "finance", "business", "analysis"]
     },
@@ -51,7 +52,7 @@
     },
     {
       "id": 6,
-      "content": "Biot-Savart magnetic field: ビオ・サバール則に基づく磁場計算をlong doubleで高精度に実装する。関連: src/c/biot_savart_precision.c, bin/biot_savart_precision.exe.",
+      "content": "Biot-Savart magnetic field: ビオ・サバール則に基づき磁場成分をlong doubleで高精度計算する。関連: src/c/biot_savart_precision.c, bin/biot_savart_precision.exe.",
       "vector": [0.05, 0.90, 0.00, 0.10, 0.20, 0.95, 0.00, 1.00, 0.35, 0.05],
       "tags": ["biot-savart", "magnetic-field", "physics", "precision"]
     },
@@ -63,25 +64,25 @@
     },
     {
       "id": 8,
-      "content": "C memory management convention: Cのニューラルネット層、重み配列、入力バッファはmalloc/freeを明示し、所有権を単純に保つ。関連: src/c/libdnn.c, src/c/libdnn.h.",
+      "content": "C memory management convention: Cのニューラルネット層、重み配列、入力バッファはmalloc/freeを明示し、所有権を簡潔に保つ。関連: src/c/libdnn.c, src/c/libdnn.h.",
       "vector": [0.65, 0.35, 0.00, 1.00, 0.15, 0.45, 0.00, 0.10, 0.10, 0.05],
       "tags": ["c", "memory", "malloc", "architecture"]
     },
     {
       "id": 9,
-      "content": "Data storage convention: 学習済み重みは.bin、比較結果やシミュレーション結果は.csv、画像変換データはdata配下に置く。関連: data/dnn_weights.bin, data/output_002.csv.",
+      "content": "Data storage convention: 学習済み重みは.bin、比較用やシミュレーション結果は.csv、画像変換データはdata配下に置く。関連: data/dnn_weights.bin, data/output_002.csv.",
       "vector": [0.35, 0.20, 0.25, 0.10, 1.00, 0.20, 0.05, 0.20, 0.80, 0.05],
       "tags": ["data", "csv", "bin", "storage"]
     },
     {
       "id": 10,
-      "content": "RAG API server: Expressサーバーがrag_research.jsonとindex.jsonを読み、/retrieve, /chat, /simulations, /run, /analyze, /batch-runを提供する。関連: server.js, public/app.js.",
+      "content": "RAG API server: Expressサーバがrag_research.jsonとindex.jsonを読み、/retrieve, /chat, /simulations, /run, /analyze, /batch-runを提供する。関連: server.js, public/app.js.",
       "vector": [0.25, 0.10, 0.10, 0.05, 0.45, 0.05, 0.10, 0.05, 0.45, 1.00],
       "tags": ["node", "express", "api", "rag"]
     },
     {
       "id": 11,
-      "content": "Vector retrieval engine: rag_precision_retrieval.cは10次元ベクトルのコサイン類似度でrag_research.jsonから最も近いidを返す。JSONはid, content, vectorの順を維持する。",
+      "content": "Vector retrieval engine: rag_precision_retrieval.cは10次元ベクトルのコサイン類似度でrag_research.jsonから最も近いidを返す。JSONはid, content, vectorを維持する。",
       "vector": [0.20, 0.70, 0.10, 0.20, 0.90, 0.75, 0.05, 0.20, 0.70, 0.90],
       "tags": ["retrieval", "vector", "cosine-similarity", "c"]
     },
@@ -111,7 +112,7 @@
     },
     {
       "id": 16,
-      "content": "Financial analyzers: tenbaggerやVRT configureなど投資・分析系のGo/C実験コード。DNNや数値特徴量を使う。関連: src/go/tenbagger_analyzer.go, src/go/vrt_analyzer.go, src/c/tenbagger_dnn.c.",
+      "content": "Financial analyzers: tenbaggerやVRT configureなど投資分析系のGo/C実験コード。DNNで数値特徴量を扱う。関連: src/go/tenbagger_analyzer.go, src/go/vrt_analyzer.go, src/c/tenbagger_dnn.c.",
       "vector": [0.65, 0.35, 0.80, 0.15, 0.30, 0.30, 0.55, 0.05, 0.70, 0.15],
       "tags": ["finance", "tenbagger", "vrt", "analysis"]
     },
