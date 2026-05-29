@@ -1,0 +1,4 @@
+goapi
+*.exe
+*.test
+.cache/

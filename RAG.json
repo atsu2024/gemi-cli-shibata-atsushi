@@ -1,0 +1,150 @@
+{
+  "rag_system_metadata": {
+    "version": "2.2.0",
+    "description": "High-Precision Scientific Computing and Deep Learning RAG knowledge base",
+    "language": "ja",
+    "vector_dimensions": 10,
+    "similarity_algorithm": "cosine_similarity_long_double",
+    "last_updated": "2026-05-28",
+    "vector_schema": [
+      "deep_learning",
+      "high_precision_math",
+      "business_finance",
+      "c_memory_architecture",
+      "data_storage",
+      "numerical_precision",
+      "go_parallelism",
+      "physics_simulation",
+      "analysis_reporting",
+      "api_ui_integration"
+    ]
+  },
+  "knowledge_base": [
+    {
+      "id": 1,
+      "content": "DNN from scratch: CとGoで外部MLライブラリに頼らず、重み、バイアス、順伝播、逆伝播、活性化関数を実装する方針。関連: src/c/libdnn.c, src/c/deep_mlp_long_double.c, src/go/shibata_dnn_goroutine.go.",
+      "vector": [0.95, 0.20, 0.05, 0.55, 0.15, 0.30, 0.35, 0.05, 0.20, 0.10],
+      "tags": ["dnn", "c", "go", "from-scratch"]
+    },
+    {
+      "id": 2,
+      "content": "Go goroutine parallel DNN: goroutineとWaitGroupでニューロン計算や重み更新を分割し、DNN学習を並列化する。関連: src/go/deeplearning_dnn_goroutine.go, src/go/rom_dnn_goroutine.go, dnn_secv_goroutine.go.",
+      "vector": [0.85, 0.25, 0.05, 0.20, 0.10, 0.20, 1.00, 0.05, 0.20, 0.15],
+      "tags": ["go", "goroutine", "parallel", "dnn"]
+    },
+    {
+      "id": 3,
+      "content": "High precision C: 科学計算と数値解析ではlong double、sqrtl、tanhl、powlなどを優先し、丸め誤差を抑える。関連: src/c/scientific_precision_ld.c, src/c/dl_long_double.c.",
+      "vector": [0.20, 1.00, 0.05, 0.25, 0.10, 1.00, 0.05, 0.55, 0.25, 0.05],
+      "tags": ["c", "long-double", "precision", "math"]
+    },
+    {
+      "id": 4,
+      "content": "Break-even point analysis: 固定費、変動費、限界利益率、安全余裕率を計算し、DNNとRAGを組み合わせて収支構造を分析する。関連: mathp/bep_shibata.c, mathp/bep_dnn_goroutine.go.",
+      "vector": [0.45, 0.35, 1.00, 0.10, 0.30, 0.25, 0.35, 0.05, 0.80, 0.10],
+      "tags": ["bep", "finance", "business", "analysis"]
+    },
+    {
+      "id": 5,
+      "content": "Lorenz system simulation: RK4などでローレンツ系を解き、カオス時系列とDNN予測を比較する。関連: src/c/lorenz_dnn_final.c, data/lorenz_final_results.csv, lorenz_comparison.csv.",
+      "vector": [0.55, 0.75, 0.05, 0.15, 0.45, 0.75, 0.10, 0.95, 0.45, 0.05],
+      "tags": ["lorenz", "chaos", "rk4", "simulation"]
+    },
+    {
+      "id": 6,
+      "content": "Biot-Savart magnetic field: ビオ・サバール則に基づき磁場成分をlong doubleで高精度計算する。関連: src/c/biot_savart_precision.c, bin/biot_savart_precision.exe.",
+      "vector": [0.05, 0.90, 0.00, 0.10, 0.20, 0.95, 0.00, 1.00, 0.35, 0.05],
+      "tags": ["biot-savart", "magnetic-field", "physics", "precision"]
+    },
+    {
+      "id": 7,
+      "content": "Double pendulum simulation: 二重振り子のカオス振動をRK4と高精度浮動小数で追跡する。関連: src/c/double_pendulum_precision.c, bin/double_pendulum_precision.exe.",
+      "vector": [0.05, 0.95, 0.00, 0.10, 0.10, 0.95, 0.00, 0.95, 0.30, 0.05],
+      "tags": ["double-pendulum", "chaos", "physics", "rk4"]
+    },
+    {
+      "id": 8,
+      "content": "C memory management convention: Cのニューラルネット層、重み配列、入力バッファはmalloc/freeを明示し、所有権を簡潔に保つ。関連: src/c/libdnn.c, src/c/libdnn.h.",
+      "vector": [0.65, 0.35, 0.00, 1.00, 0.15, 0.45, 0.00, 0.10, 0.10, 0.05],
+      "tags": ["c", "memory", "malloc", "architecture"]
+    },
+    {
+      "id": 9,
+      "content": "Data storage convention: 学習済み重みは.bin、比較用やシミュレーション結果は.csv、画像変換データはdata配下に置く。関連: data/dnn_weights.bin, data/output_002.csv.",
+      "vector": [0.35, 0.20, 0.25, 0.10, 1.00, 0.20, 0.05, 0.20, 0.80, 0.05],
+      "tags": ["data", "csv", "bin", "storage"]
+    },
+    {
+      "id": 10,
+      "content": "RAG API server: Expressサーバがrag_research.jsonとindex.jsonを読み、/retrieve, /chat, /simulations, /run, /analyze, /batch-runを提供する。関連: server.js, public/app.js.",
+      "vector": [0.25, 0.10, 0.10, 0.05, 0.45, 0.05, 0.10, 0.05, 0.45, 1.00],
+      "tags": ["node", "express", "api", "rag"]
+    },
+    {
+      "id": 11,
+      "content": "Vector retrieval engine: rag_precision_retrieval.cは10次元ベクトルのコサイン類似度でrag_research.jsonから最も近いidを返す。JSONはid, content, vectorを維持する。",
+      "vector": [0.20, 0.70, 0.10, 0.20, 0.90, 0.75, 0.05, 0.20, 0.70, 0.90],
+      "tags": ["retrieval", "vector", "cosine-similarity", "c"]
+    },
+    {
+      "id": 12,
+      "content": "Build convention: MakefileはCとGoの実行ファイルをbin配下へビルドする。Cはgcc -O3、Goはgo buildを使う。関連: Makefile, bin/.",
+      "vector": [0.30, 0.25, 0.05, 0.45, 0.35, 0.20, 0.45, 0.05, 0.20, 0.55],
+      "tags": ["build", "makefile", "gcc", "go-build"]
+    },
+    {
+      "id": 13,
+      "content": "OAI intent DNN: プロンプト支援や意図分類向けのGo製DNN。goroutineで行列計算を並列化する。関連: src/go/oai_dnn_goroutine.go.",
+      "vector": [0.90, 0.15, 0.05, 0.10, 0.10, 0.10, 0.95, 0.05, 0.20, 0.65],
+      "tags": ["oai", "intent", "go", "dnn"]
+    },
+    {
+      "id": 14,
+      "content": "Image DNN pipeline: 画像やPDF由来データを数値化し、long double DNNで扱う実験系。関連: src/c/image_dnn_ld.c, src/c/dnn_image3_pdf_ld.c, data/image_data.csv.",
+      "vector": [0.80, 0.65, 0.05, 0.25, 0.70, 0.65, 0.05, 0.20, 0.55, 0.10],
+      "tags": ["image", "pdf", "dnn", "pipeline"]
+    },
+    {
+      "id": 15,
+      "content": "Anti-virus DNN experiment: DNNを使った分類・検知系の実験コード。C版とGo版がある。関連: src/c/dnn_anti_virus.c, src/go/dnn_anti_virus.go.",
+      "vector": [0.85, 0.25, 0.05, 0.30, 0.25, 0.25, 0.45, 0.05, 0.35, 0.15],
+      "tags": ["security", "classification", "dnn", "experiment"]
+    },
+    {
+      "id": 16,
+      "content": "Financial analyzers: tenbaggerやVRT configureなど投資分析系のGo/C実験コード。DNNで数値特徴量を扱う。関連: src/go/tenbagger_analyzer.go, src/go/vrt_analyzer.go, src/c/tenbagger_dnn.c.",
+      "vector": [0.65, 0.35, 0.80, 0.15, 0.30, 0.30, 0.55, 0.05, 0.70, 0.15],
+      "tags": ["finance", "tenbagger", "vrt", "analysis"]
+    },
+    {
+      "id": 17,
+      "content": "Math drawing tools: Python/TkinterやGoで数式、図形描画、プロット、PDF/画像出力を扱う。関連: mathp/mathdraw.py, src/python/MathDraw.py, src/go/math_draw_dnn.go.",
+      "vector": [0.25, 0.20, 0.05, 0.05, 0.55, 0.10, 0.25, 0.25, 0.70, 0.20],
+      "tags": ["mathdraw", "python", "plot", "pdf"]
+    },
+    {
+      "id": 18,
+      "content": "Public dashboard: ブラウザUIはAPIの実行、シミュレーション一覧、RAG検索結果表示を担当する。関連: public/index.html, public/app.js, public/style.css.",
+      "vector": [0.10, 0.05, 0.05, 0.00, 0.35, 0.00, 0.05, 0.00, 0.55, 0.95],
+      "tags": ["frontend", "dashboard", "ui", "javascript"]
+    },
+    {
+      "id": 19,
+      "content": "SQLite research history: research.dbにシミュレーション実行履歴やチャット履歴を保存するため、database.jsがある。関連: database.js, research.db.",
+      "vector": [0.10, 0.05, 0.10, 0.05, 0.90, 0.00, 0.05, 0.00, 0.75, 0.80],
+      "tags": ["sqlite", "database", "history", "node"]
+    },
+    {
+      "id": 20,
+      "content": "Testing workflow: test_api.jsは起動中のlocalhost:3000に対して/, /simulations, /retrieve, /run, /analyze, /batch-runを検証する。npm testから実行される。",
+      "vector": [0.15, 0.10, 0.10, 0.05, 0.35, 0.05, 0.10, 0.05, 0.65, 0.95],
+      "tags": ["test", "api", "smoke-test", "axios"]
+    },
+    {
+      "id": 21,
+      "content": "Project SECV Goroutine DNN: 高パフォーマンスなGo言語DNN実装。goroutineによる並列処理で順伝播と誤差逆伝播を高速化する。関連: dnn_secv_goroutine.go, dnn_secv_goroutine.exe.",
+      "vector": [0.90, 0.20, 0.05, 0.15, 0.10, 0.15, 1.00, 0.05, 0.25, 0.20],
+      "tags": ["secv", "go", "goroutine", "dnn"]
+    }
+  ]
+}

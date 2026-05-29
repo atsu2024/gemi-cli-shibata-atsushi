@@ -1,0 +1,257 @@
+/inihttps://github.com/Stephane-D/SGDK
+
+https://jdk.java.net/24/
+
+https://www.retrodev.com/blastem/
+
+Cドライブ直下保存       
+
+C:\sgdk_program　　フォルダ作成
+
+その中に res と　srcフォルダ作成 　
+
+cd C:\SGDK　　名前変更
+
+C:\SGDK\bin\make -f C:\SGDK\makelib.gen
+
+cd C:\sgdk_program
+
+C:\SGDK\bin\make -f C:\SGDK\makefile.gen
+
+https://www.retrodev.com/blastem/      longdouble C言語プログラムを作成してください
+
+損益分岐点　柴田敦史 longdouble C言語プログラムを作成してください
+
+損益分岐点　柴田敦史  RAG  longdouble C言語プログラムを作成してください
+
+＜LLMシステム＞
+https://nodejs.org/ja/
+インストール
+
+cmd（windows コマンドプロンプト 以下、cmd）
+
+npm install -g @google/gemini-cli
+
+cmd
+
+gemini
+
+login
+
+C:\mathp
+
+C:\Program Files\PeopleLock\PeopleLock\ANTI_virus.exeをdeeplearning及び深層学習（Deep Learning）、ディープニューラルネットワーク（DNN）にしてgoroutin GO言語プログラムを作成してbuild、実行してください
+
+
+C:\Users\S111478\mathpをdeeplearning及び深層学習（Deep Learning）、ディープニューラルネットワーク（DNN）にしてgoroutin GO言語プログラムを作成してbuild、実行してください
+
+
+Fix & repairをdeeplearning及び深層学習（Deep Learning）、ディープニューラルネットワーク（DNN）にしてgoroutin GO言語プログラムを作成してbuild、実行してください
+
+コマンドプロンプト（深層学習用）
+(アドレス参照:C:\Users\Pictures\image （あるいは、全てのデータ）をdeeplearning及び深層学習（Deep Learning）、ディープニューラルネットワーク（DNN）にしてください。long double C言語プログラムを作成してコンパル、実行してください
+goroutin GO言語プログラムを作成してbuild、実行してください
+　)
+//Epoch 50/500
+100/500等が出てきたら学習中
+
+/init 
+
+npm init -y
+
+
+/init 
+
+npm init -y
+
+
+/init 
+
+npm init -y
+
+create an index.json
+
+
+/init 
+
+npm init -y
+
+create an index.json
+
+RAGのlong double C言語プログラムを作成してコンパル、実行してください
+
+RAGのjsonデータを作成してください
+
+終了
+
+cmd
+
+md hello
+
+cd hello
+
+git init
+
+setup-github
+
+git status
+
+Create a .gitignore
+
+Create a .gitignore to .exe files
+gemini
+Ctrl+Y
+
+gemi-cli-shibata-atsushi
+
+
+何か質問(アドレス参照deeplearningにしてください)等
+
+
+cd hello
+
+github repository 
+
+入力
+
+終了
+
+
+外部のAI
+を開き　
+gemini
+chatgpt
+claude
+copilot
+grock
+をひらき
+
+gemini-cliで作成したjsデータとjsonデータすべて添付して
+コマンドプロンプト　と入力して、
+損益分岐点、RAG　longdouble C言語プログラムを作成してください
+yes 
+yes
+yes all
+
+実行する。
+
+以上の工程を繰り返す。
+
+
+<音声>
+https://nkbp.jp/nsoft
+1月号　第2章
+C直下Projectフォルダ作成し入れる。
+diff_match_patch
+https://github.com/google/diff-match-patch/blob/master/javascript/diff_match_patch.js
+は、publicフォルダに入れる。
+envは、APIキー,アドレスを入力する。
+
+cmd
+cd C:\Project
+npm init -y
+npm install axios dotenv express
+node server.js
+
+webブラウザに
+http://localhost:8080
+と入力しエンター
+
+
+
+
+
+
+https://github.com/Stephane-D/SGDK
+
+https://jdk.java.net/24/
+
+https://www.retrodev.com/blastem/
+
+Cドライブ直下保存
+
+C:\sgdk_program　　フォルダ作成
+
+その中に res と　srcフォルダ作成 　
+
+cd C:\SGDK　　名前変更
+
+C:\SGDK\bin\make -f C:\SGDK\makelib.gen
+
+cd C:\sgdk_program
+
+C:\SGDK\bin\make -f C:\SGDK\makefile.gen
+
+https://www.retrodev.com/blastem/
+
+
+
+
+
+
+
+//
+
+
+clipboard_app.py
+
+gemini -s  コマンド
+
+
+
+
+cmd
+
+npm init -y
+npm install axios dotenv express
+
+
+Node.js
+https://nodejs.org/ja
+
+npm init -y
+
+npm install axios dotenv express
+
+diff_match_patch
+https://github.com/google/diff-match-patch/blob/master/javascript/diff_match_patch.js
+
+Google Cloudのプロジェクト作成ページ
+https://console.cloud.google.com/projectcreate?hl=ja
+
+Google AI Studio APIキー
+https://aistudio.google.com/apikey?hl=ja
+
+node server.js
+
+http://localhost:8080
+
+
+
+
+Node.js
+https://nodejs.org/ja
+
+npm init -y
+
+npm install axios dotenv express
+
+diff_match_patch
+https://github.com/google/diff-match-patch/blob/master/javascript/diff_match_patch.js
+
+Google Cloudのプロジェクト作成ページ
+https://console.cloud.google.com/projectcreate?hl=ja
+
+Google AI Studio APIキー
+https://aistudio.google.com/apikey?hl=ja
+
+node server.js
+
+http://localhost:8080
+
+
+
+
+
+
+

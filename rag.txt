@@ -1,0 +1,71 @@
+{
+  "project_metadata": {
+    "name": "High-Precision Scientific Computing & Deep Learning Workspace",
+    "owner": "Atsushi Shibata (柴田敦史)",
+    "description": "A specialized environment for high-precision numerical simulations and deep learning implementations from scratch using C, Go, and Python.",
+    "core_technologies": ["C (long double)", "Go (Goroutines)", "Python (Matplotlib)", "Node.js (Express)"]
+  },
+  "knowledge_base": [
+    {
+      "category": "Deep Learning (深層学習)",
+      "topics": [
+        {
+          "subject": "DNN Implementation from Scratch",
+          "description": "Implementation of Deep Neural Networks without external libraries. Focuses on manual weight management, backpropagation, and activation functions like Sigmoid, Tanh, and ReLU.",
+          "key_files": [
+            "src/c/libdnn.c",
+            "src/c/deep_mlp_long_double.c",
+            "src/go/shibata_dnn_goroutine.go",
+            "mathp/bep_dnn_goroutine.go"
+          ]
+        },
+        {
+          "subject": "Parallel Computing with Goroutines",
+          "description": "Utilizing Go's concurrency primitives (Goroutines and WaitGroups) to parallelize neuron calculations and weight updates in DNNs, significantly improving training performance.",
+          "key_files": [
+            "src/go/deeplearning_dnn_goroutine.go",
+            "src/go/shibata_dnn_goroutine.go",
+            "mathp/bep_dnn_goroutine.go"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "Scientific Simulations (数値シミュレーション)",
+      "topics": [
+        {
+          "subject": "High-Precision Numerical Analysis",
+          "description": "Using 'long double' in C for maximum precision in physics and financial modeling. Key models include Lorenz systems and magnetic field calculations.",
+          "key_files": [
+            "src/c/scientific_precision_ld.c",
+            "src/c/lorenz_dnn_final.c",
+            "src/c/biot_savart_precision.c"
+          ]
+        },
+        {
+          "subject": "Break-Even Point (BEP) Analysis",
+          "description": "Mathematical modeling of profitability. Calculations include contribution margin ratio, break-even sales, and safety margin. Recently integrated with DNN for predictive modeling.",
+          "key_files": [
+            "mathp/bep_shibata.c",
+            "mathp/bep_dnn_goroutine.go"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "Development Conventions (開発規約)",
+      "guidelines": [
+        "Use 'long double' and corresponding math functions (sqrtl, tanhl, powl) for scientific calculations.",
+        "Prefer explicit memory management for neural network layers in C.",
+        "Serialize weights to .bin files and results to .csv for analysis.",
+        "All compiled binaries should be stored in the bin/ directory."
+      ]
+    }
+  ],
+  "file_mappings": {
+    "src/c": "Core C source code for high-precision simulations and DNN libraries.",
+    "src/go": "Go implementations focusing on parallel execution and performance.",
+    "mathp": "Mathematical logic, BEP analysis, and experimental scripts (Python/Go/C).",
+    "bin": "Centralized storage for compiled executables."
+  }
+}

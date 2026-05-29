@@ -1,0 +1,26 @@
+{
+  "ignore": [
+    "node_modules",
+    "bin",
+    ".git",
+    "AppData",
+    "Box",
+    "OneDrive",
+    "Desktop",
+    "Documents",
+    "Downloads",
+    "Favorites",
+    "Links",
+    "Music",
+    "Pictures",
+    "Saved Games",
+    "Searches",
+    "Videos"
+  ],
+  "watch": [
+    "server.js",
+    "package.json",
+    "src/"
+  ],
+  "ext": "js,json"
+}

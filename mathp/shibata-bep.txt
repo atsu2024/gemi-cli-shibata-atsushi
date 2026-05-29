@@ -1,0 +1,2 @@
+gcc -std=c11 -Wall -Wextra -o bep_shibata bep_shibata.c -lm
+./bep_shibata

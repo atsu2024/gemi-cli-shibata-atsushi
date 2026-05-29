@@ -13,10 +13,14 @@ data/
 *.png
 !shibata_dnn_output.png
 output_*.csv
+research.db
 
 # Node.js
 node_modules/
 .env
+npm-start.err.log
+npm-start.out.log
+.node_repl_history
 
 # IDE and AI tools
 .vscode/
@@ -36,8 +40,11 @@ node_modules/
 .aider.input.history
 .claude.json
 .vscode-shared/
+.codex/
+.grok/
+.config/
 
-# Windows Home Directory Folders & Configs
+# Windows Home Directory Folders & Configs (including junctions)
 AppData/
 "Application Data/"
 "Local Settings/"
@@ -47,8 +54,18 @@ AppData/
 "Recent/"
 "SendTo/"
 "Templates/"
-"繧ｹ繧ｿ繝ｼ繝 繝｡繝九Η繝ｼ/"
+"スタート メニュー/"
 "Cookies/"
+"Application Data"
+"Local Settings"
+"My Documents"
+"NetHood"
+"PrintHood"
+"Recent"
+"SendTo"
+"Templates"
+"スタート メニュー"
+"Cookies"
 Desktop/
 Documents/
 Downloads/
@@ -74,7 +91,6 @@ Local Sites/
 .local/
 .cisco/
 .lmstudio-home-pointer
-.node_repl_history
 OpenVPN/
 
 # OS files
