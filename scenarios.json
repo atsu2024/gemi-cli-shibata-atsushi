@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Base AGV deployment",
+    "fixedCost": 1620000000,
+    "unitPrice": 5000,
+    "variableCost": 3200,
+    "expectedDemand": 1800000,
+    "query": "AGV break-even AI-driven development RAG goroutine DNN"
+  },
+  {
+    "name": "Conservative maintenance plan",
+    "fixedCost": 1350000000,
+    "unitPrice": 5200,
+    "variableCost": 3700,
+    "expectedDemand": 1800000,
+    "query": "maintenance risk profitability break-even RAG"
+  },
+  {
+    "name": "High volume automation",
+    "fixedCost": 1710000000,
+    "unitPrice": 4800,
+    "variableCost": 2900,
+    "expectedDemand": 1800000,
+    "query": "high volume AGV automation profitability DNN"
+  }
+]

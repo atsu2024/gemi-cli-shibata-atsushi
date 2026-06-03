@@ -1,0 +1,32 @@
+[
+  {
+    "id": "break_even_point",
+    "title": "Break-even point",
+    "text": "Break-even units are fixed cost divided by contribution margin per unit. Contribution margin is unit price minus variable cost.",
+    "tags": ["break-even", "fixed cost", "contribution margin", "profitability"]
+  },
+  {
+    "id": "dnn_deep_neural_network",
+    "title": "DNN deep neural network",
+    "text": "A deep neural network uses multiple dense layers to transform input features into predictions such as risk score or profitability probability.",
+    "tags": ["DNN", "deep learning", "risk score", "profitability"]
+  },
+  {
+    "id": "ai_driven_development_rag",
+    "title": "AI-driven development RAG",
+    "text": "RAG retrieves related context before generating an explanation. It separates calculation, evidence, and generated text.",
+    "tags": ["RAG", "retrieval", "AI-driven development", "evidence"]
+  },
+  {
+    "id": "go_goroutine_inference",
+    "title": "Go goroutine inference",
+    "text": "Go goroutines can calculate neurons in a dense layer concurrently. A WaitGroup keeps layer execution deterministic.",
+    "tags": ["Go", "goroutine", "concurrency", "inference"]
+  },
+  {
+    "id": "agv_analysis_memo",
+    "title": "AGV analysis memo",
+    "text": "This memo combines break-even analysis, AI-driven development, RAG, goroutines, and DNN inference for AGV profitability scenarios.",
+    "tags": ["AGV", "RAG", "DNN", "break-even", "scenario analysis"]
+  }
+]

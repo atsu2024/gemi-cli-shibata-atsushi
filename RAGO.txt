@@ -1,0 +1,78 @@
+{
+  "project": {
+    "id": "S111478",
+    "name": "MetaDefenderDriveToolkit_RAG",
+    "base_path": "C:\\Users\\S111478\\OneDrive - 三機工業株式会社\\MetaDefenderDriveToolkit"
+  },
+  "data_sources": [
+    {
+      "type": "file_system",
+      "path": "DNN",
+      "description": "深層学習モデル・推論結果・特徴量"
+    },
+    {
+      "type": "file_system",
+      "path": "損益分岐点",
+      "description": "収益計算・ROI・コスト分析データ"
+    }
+  ],
+  "documents": [
+    {
+      "doc_id": "DNN_001",
+      "category": "machine_learning",
+      "title": "DNN推論モデル",
+      "content": "AGV/UAV制御、画像認識、障害物回避モデル",
+      "embedding_target": true
+    },
+    {
+      "doc_id": "BE_001",
+      "category": "finance",
+      "title": "損益分岐点計算",
+      "content": "固定費・変動費・販売単価から算出",
+      "formula": "BE = 固定費 / (単価 - 変動費)",
+      "embedding_target": true
+    },
+    {
+      "doc_id": "SEC_001",
+      "category": "security",
+      "title": "MetaDefenderスキャン結果",
+      "content": "ファイル安全性・ウイルスチェック・ハッシュ分析",
+      "embedding_target": true
+    }
+  ],
+  "rag_pipeline": {
+    "embedding_model": "all-MiniLM-L6-v2",
+    "chunk_size": 512,
+    "chunk_overlap": 64,
+    "vector_db": {
+      "type": "FAISS",
+      "index_path": "./vector_index"
+    }
+  },
+  "query_patterns": [
+    {
+      "query": "損益分岐点を計算したい",
+      "expected_docs": ["BE_001"]
+    },
+    {
+      "query": "AGVの最適経路は？",
+      "expected_docs": ["DNN_001"]
+    },
+    {
+      "query": "このファイルは安全か？",
+      "expected_docs": ["SEC_001"]
+    }
+  ],
+  "integration": {
+    "languages": ["C", "Go", "Python"],
+    "api_framework": "FastAPI",
+    "os": "Windows",
+    "automation": "RPA連携"
+  },
+  "outputs": {
+    "excel": true,
+    "pdf": true,
+    "qr_code": true,
+    "dashboard": true
+  }
+}
